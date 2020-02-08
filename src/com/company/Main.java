@@ -11,75 +11,69 @@ public class Main {
         String test = mk.next();
         long start = System.currentTimeMillis();
         String total_String = "";
-        List<String> list1 = new ArrayList<>();
         List<String> list2 = new ArrayList<>();
-        File file = new File("C:\\Users\\Nahid MK\\Desktop\\subject\\hello.txt");
-        BufferedReader br = null;
+        String st = "";
+        File file = new File("C:\\Users\\Nahid MK\\IdeaProjects\\hello\\file.txt");
+        StringBuilder stringBuilder = new StringBuilder();
         try {
-            br = new BufferedReader(new FileReader(file));
-            String st;
-            while ((st = br.readLine()) != null){
-                total_String+= st;
+            BufferedReader br = new BufferedReader(new FileReader(file));
+
+            while ((st = br.readLine()) != null) {
+                stringBuilder.append(st).append(" ");
             }
 
         } catch (Exception e) {
             e.printStackTrace();
         }
-        String arr[] = total_String.split(" ");
-        HashSet<String>set = new HashSet<>(Arrays.asList(total_String.split(" ")));
-        for(String i : set)
-        {
-            if(i.charAt(0)==test.charAt(0))
-            {
-                list1.add(i);
-            }
-        }
+        total_String = stringBuilder.toString();
+        TreeSet<String> set = new TreeSet<>(Arrays.asList(total_String.split(" ")));
+        int total_wrod = (new ArrayList<>(Arrays.asList(total_String.split(" "))).size());
+        List<String> list1 = new ArrayList<>(set);
+        list1.remove(0);
+        for (int i = 0; i < test.length(); i++) {
 
-        for(int i = 0;i<test.length();i++) {
-            if(i%2==0)
-            {
-                int count = 0;
-                for(int k = 0;k<list1.size();k++){
-                    if (count<=list1.size()-1 && test.charAt(i) == list1.get(count).charAt(i) && test.length() <= list1.get(count).length()) {
+            if (i % 2 == 0) {
+                for (int k = 0; k < list1.size(); k++) {
 
-                        list2.add(list1.get(count));
+                    if (test.charAt(i) == list1.get(k).charAt(i) && test.length() <= list1.get(k).length()) {
+
+                        list2.add(list1.get(k));
 
                     }
-                    count++;
                 }
                 list1.clear();
-            }else {
+            } else {
 
-                int count1 = 0;
-                for(int k = 0;k<list2.size();k++) {
-                    if (count1<=list2.size()-1 && test.charAt(i) == list2.get(count1).charAt(i)) {
+                for (int k = 0; k < list2.size(); k++) {
+                    if (test.charAt(i) == list2.get(k).charAt(i)) {
 
-                        list1.add(list2.get(count1));
+                        list1.add(list2.get(k));
                     }
-                    count1++;
                 }
-                System.out.println("second if "+ list1);
                 list2.clear();
             }
         }
-        System.out.println("Most Suggest word from "+arr.length+" word");
-        try {
-            if (list1.isEmpty()) {
-                for (int i = 0; i < 10; i++) {
-                    System.out.println(list2.get(i));
+        System.out.println("Most Suggest word from " + total_wrod + " word");
+        if (list1.isEmpty() && list2.isEmpty()) {
+            System.out.println("Sorry no match found...!");
+        }
+        else {
+            try {
+                if (list1.isEmpty()) {
+                    for (int i = 0; i < 10; i++) {
+                        System.out.println(list2.get(i));
+                    }
+                } else {
+                    for (int i = 0; i < 10; i++) {
+                        System.out.println(list1.get(i));
+                    }
                 }
-            } else {
-                for (int i = 0; i < 10; i++) {
-                    System.out.println(list1.get(i));
-                }
+            } catch (Exception e) {
+
             }
-        }catch (Exception e)
-        {
 
         }
         long end = System.currentTimeMillis();
-        System.out.println("The time have taken = "+(end-start));
-//        list2.forEach(System.out::println);
-//        list1.forEach(System.out::println);
+        System.out.println("The time have taken = " + (end - start) + " milli second");
     }
 }
